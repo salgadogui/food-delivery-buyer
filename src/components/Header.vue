@@ -1,20 +1,24 @@
 <template>
-    <header class="header__menu">
-      <div class="container">
-        <div class="header__navbar">
-          <div class="header__menu--left-side">
-            <a href="/">
-              <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
-            </a>
+  <header class="header__menu">
+    <div class="container">
+      <div class="header__navbar">
+        <div class="header__menu--left-side">
+          <a href="/">
+            <img class="header__menu--logo" src="@/assets/img/main_logo.svg" alt="Food delivery website logo" />
+          </a>
 
-            <div v-if="path == '/'" class="header__menu--search">
-              <input class="header__menu--search-input" type="text" placeholder="Search " />
-              <i class="header__menu--search-icon fa-solid fa-magnifying-glass"></i>
-            </div>
+          <div v-if="path == '/'" class="header__menu--search">
+            <input class="header__menu--search-input" type="text" placeholder="Search " />
+            <i class="header__menu--search-icon fa-solid fa-magnifying-glass"></i>
           </div>
+        </div>
 
           <div class="header__menu--right-side">
             <nav class="header__menu--link">
+			  <div class="header__menu--icon">
+				<a href="#"><img class="header__menu--icon-item" src="@/assets/img/shopping bag.svg" alt="shopping bag icon" /></a>
+				<span class="header__menu--icon-number">4</span>
+			  </div>
               <span class="header__menu--divider-vertical"></span>
               <div v-if="!auth.loggedIn">
                 <a class="menu_link active" href="/signin">Sign In</a>
@@ -26,9 +30,9 @@
             </nav>
             <img class="header__menu--icon-mobile" src="@/assets/img/menu.svg" alt=" header menu icon " />
           </div>
-        </div>
-      </div>
-    </header>
+	  </div>
+    </div>
+  </header>
 </template>
 
 <script setup lang="ts">

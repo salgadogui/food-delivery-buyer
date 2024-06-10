@@ -36,6 +36,16 @@
 </template>
 
 <script setup lang="ts">
-  import ProductCard from '@/components/ProductCard.vue'
+	import { onMounted, ref } from 'vue';
+	import ProductCard from '@/components/ProductCard.vue';
+	import { useStoreStore } from '@/stores/StoreStore';
+
+	const storeStore = useStoreStore();
+	const stores = ref([]);
+
+	onMounted(async () => {
+	  await storeStore.fetchStores();
+	  stores.value = storeStore.getStores;
+	});
 </script>
 
