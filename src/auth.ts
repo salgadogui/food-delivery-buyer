@@ -23,7 +23,7 @@ export class Auth {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "X-API-KEY": "ldd+iZEBZvJ9x3FVM2azZdTujDM="
+                    "X-API-KEY": "pMzZsImP6EiKzqySwJ8mltFWSyI="
                 },
                 body: JSON.stringify(body)
             });
