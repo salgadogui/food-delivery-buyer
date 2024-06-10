@@ -21,8 +21,6 @@
               </div>
               <div v-if="auth.loggedIn">
                 <a class="menu_link active" href="/orders">My Orders</a>
-                <a class="menu_link active" href="/stores">My Stores</a>
-                <a class="menu_link active" href="/products">My Products</a>
                 <a class="menu_link active" href="/account">Account</a>
               </div>
             </nav>

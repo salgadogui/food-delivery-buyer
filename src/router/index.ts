@@ -2,8 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import SignInView from '@/views/SignInView.vue'
 import AccountView from '@/views/AccountView.vue'
-import StoresView from '@/views/StoresView.vue'
-import ProductsView from '@/views/ProductsView.vue'
 import OrdersView from '@/views/OrdersView.vue'
 
 const router = createRouter({
@@ -24,21 +22,11 @@ const router = createRouter({
       name: 'account',
       component: AccountView
     },
-    {
-      path: '/stores',
-      name: 'stores',
-      component: StoresView
-    },
-    {
-      path: '/products',
-      name: 'products',
-      component: ProductsView
-    },
-    {
-      path: '/orders',
-      name: 'orders',
-      component: OrdersView
-    }
+	{
+	  path: '/orders',
+	  name: 'orders',
+	  component: OrdersView
+	}
   ]
 })
 
