@@ -26,7 +26,11 @@
   <body>
     <div class="container">
       <section class="products__list">
-        <ProductCard/>
+        <StoreCard 
+          v-for="store in stores"
+          :key="store.id"
+          :store="store"
+		/>
       </section>
     </div>
   </body>
@@ -37,15 +41,16 @@
 
 <script setup lang="ts">
 	import { onMounted, ref } from 'vue';
-	import ProductCard from '@/components/ProductCard.vue';
+	import StoreCard from '@/components/StoreCard.vue';
 	import { useStoreStore } from '@/stores/StoreStore';
+	import type { Store } from '@/types/store'
 
-	const storeStore = useStoreStore();
-	const stores = ref([]);
+	const storeStore = useStoreStore()
+	const stores = ref<Store[]>([])
 
 	onMounted(async () => {
-	  await storeStore.fetchStores();
-	  stores.value = storeStore.getStores;
+	  await storeStore.fetchStores()
+	  stores.value = storeStore.getStores
 	});
 </script>
 
