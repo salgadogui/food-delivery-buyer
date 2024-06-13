@@ -24,6 +24,10 @@ export const useProductStore = defineStore('product', {
       const data: Product[] = await fetchService.fetchAll('products');
       this.products = data;
     },
+	async fetchStoreProducts(storeId: string) {
+		const data: Product[] = await fetchService.fetchAll<Product>(`stores/${storeId}/products`)
+		return data
+	},
     async createProduct(
       productName: string, productPrice: number, storeId: number) {
         await fetchService.create<Product>(`stores/${storeId}/products`, { name: productName, price: productPrice, store_id: storeId });

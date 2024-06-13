@@ -17,7 +17,7 @@
             <nav class="header__menu--link">
 			  <div class="header__menu--icon">
 				<a href="#"><img class="header__menu--icon-item" src="@/assets/img/shopping bag.svg" alt="shopping bag icon" /></a>
-				<span class="header__menu--icon-number">4</span>
+				<span class="header__menu--icon-number">{{ productCount }}</span>
 			  </div>
               <span class="header__menu--divider-vertical"></span>
               <div v-if="!auth.loggedIn">
@@ -36,12 +36,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
-import { useAuthStore } from '@/stores/AuthStore';
+	import { useRoute } from 'vue-router';
+	import { computed } from 'vue';
+	import { useAuthStore } from '@/stores/AuthStore';
+	import { useCartStore } from '@/stores/CartStore';
 
-const auth = useAuthStore()
-const route = useRoute()
-const path = computed( () => route.path )
+	const cartStore = useCartStore()
+	const auth = useAuthStore()
+	const route = useRoute()
+	const path = computed( () => route.path )
 
+	const productCount = computed(() => cartStore.productCount);
 </script>

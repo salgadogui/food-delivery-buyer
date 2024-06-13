@@ -10,6 +10,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Paginator from 'primevue/paginator';
 import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 import FloatLabel from 'primevue/floatlabel';
 import Dropdown from 'primevue/dropdown';
 import Tag from 'primevue/tag';
@@ -23,6 +24,7 @@ app.component('DataTable', DataTable)
 app.component('Column', Column)
 app.component('Paginator', Paginator)
 app.component('InputText', InputText)
+app.component('InputNumber', InputNumber)
 app.component('FloatLabel', FloatLabel)
 app.component('Dropdown', Dropdown)
 app.component('Tag', Tag)
