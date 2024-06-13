@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia';
 import { Auth } from '@/auth';
+import FetchService from "@/fetchService";
+import type { User } from '@/types/user';
+
+const baseUrl = 'http://localhost:3000';
+const authToken = localStorage.getItem('token') || sessionStorage.getItem('token') || '';
+const fetchService = new FetchService(baseUrl, authToken);
 
 interface State {
   email: string;
@@ -49,6 +55,10 @@ export const useAuthStore = defineStore('auth', {
       this.$state.email = email;
       this.$state.remember = remember;
       this.$state.token = localStorage.getItem('token') || sessionStorage.getItem('token')
-    }
+    },
+	async fetchUserId() {
+		const data: User = await fetchService.fetchAll<User>("me");	
+		return data
+	}
   }  
 });
