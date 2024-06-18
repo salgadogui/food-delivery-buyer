@@ -14,11 +14,11 @@
         </div>
       </div>
 
-	  <Dialog v-model:visible="showDialog" modal header="Store Products" :style="{ width: '50rem' }">
+	  <Dialog v-model:visible="showDialog" modal header="Store Products" :style="{ width: '35rem' }">
 		<div v-if="products">
-		  <div v-for="product in products" :key="product.id" class="product-item">
+		  <div v-for="product in products" :key="product.id" class="flex items-center gap-4 mb-12">
 			<span>{{ product.name }}</span>
-			<InputNumber v-model="productQuantities[product.id]" :min="1" />
+			<InputNumber v-model="productQuantities[product.id]" :min="0" class="flex-auto" />
 		  </div>
 		  <Button label="Add to Cart" @click="addToCart" />
 		</div>

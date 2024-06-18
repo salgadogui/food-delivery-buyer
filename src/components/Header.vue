@@ -36,12 +36,31 @@
     <Dialog v-model:visible="showCartDialog" modal header="Cart" :style="{ width: '50rem' }">
       <div v-if="cartStore.products.length > 0">
         <div v-for="product in cartStore.products" :key="product.id" class="cart-item">
-          <span>{{ product.name }}</span>
-          <span>Quantity: {{ product.quantity }}</span>
+			<strong><p><span>{{ product.name }}</span></p></strong>
+			<p>Price: {{ product.price }}</p>
+			<p><span>Quantity: {{ product.quantity }}</span></p>
+		  <hr/>
         </div>
-        <Button label="Confirm Order" @click="handleOrder" />
+		<h3><span>Total value: {{ cartStore.getValue }}</span></h3>
+		<hr>
+		<div class="payment-details">
+		<h3>Payment Details</h3>
+		<p>
+		  <label for="paymentNumber">Card Number: </label>
+		  <input id="paymentNumber" type="text" v-model="paymentDetails.number" required />
+		</p>
+		<p>
+		  <label for="paymentValid">Valid Until: </label>
+		  <input id="paymentValid" type="date" v-model="paymentDetails.valid" required />
+		</p>
+		  <label for="paymentCVV">CVV: </label>
+		  <input id="paymentCVV" type="number" v-model="paymentDetails.cvv" required />
+		</div>
+		<p>
+        <Button label="Confirm Order" @click="handleOrder" style="margin-right: 10px" />
         <Button label="Clear Cart" @click="clearCart" />
-      </div>
+     	</p>
+	  </div>
       <div v-else>
         <p>Your cart is empty.</p>
       </div>
@@ -62,6 +81,12 @@
 	const showCartDialog = ref(false);
 	const userId = ref<string>();
 	const productCount = computed(() => cartStore.productCount);
+	const paymentDetails = ref({
+	  value: cartStore.getValue,
+	  number: '',
+	  valid: '',
+	  cvv: ''
+	});
 
 	function openCartDialog() {
 	  showCartDialog.value = true;
@@ -76,6 +101,6 @@
 		const data = await auth.fetchUserId();
 		console.log(data);
 		userId.value = data.id.toString();
-		cartStore.confirmOrder(userId.value);
+		cartStore.confirmOrder(userId.value, paymentDetails.value);
 	}
 </script>

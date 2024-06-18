@@ -51,6 +51,8 @@
 				return 'secondary';
 			case 'order_confirmed':
 				return 'info';
+			case 'preparing_order':
+				return 'info';
 			case 'out_for_delivery':
 				return 'warning';
 			case 'delivered':
