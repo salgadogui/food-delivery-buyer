@@ -15,6 +15,8 @@ import FloatLabel from 'primevue/floatlabel';
 import Dropdown from 'primevue/dropdown';
 import Tag from 'primevue/tag';
 import Dialog from 'primevue/dialog';
+import Timeline from 'primevue/timeline';
+
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -29,6 +31,7 @@ app.component('FloatLabel', FloatLabel)
 app.component('Dropdown', Dropdown)
 app.component('Tag', Tag)
 app.component('Dialog', Dialog)
+app.component('Timeline', Timeline)
 
 pinia.use(({ store }) => {store.router = markRaw(router)})
 app.use(PrimeVue)

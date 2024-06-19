@@ -65,14 +65,24 @@
         <p>Your cart is empty.</p>
       </div>
     </Dialog>
+    <Dialog header="Order Status" v-model:visible="orderStatusDialogVisible" :modal="true">
+      <div v-if="currentOrderStatus">
+		  <p>Order ID: <strong>{{ currentOrderStatus.order_id }}</strong></p>
+		  <p>Status: <strong>{{ currentOrderStatus.status }}</strong></p>
+      </div>
+      <div v-else>
+        <p>Loading status...</p>
+      </div>
+    </Dialog>
   </header>
 </template>
 
 <script setup lang="ts">
 	import { useRoute } from 'vue-router';
-	import { computed, ref } from 'vue';
+	import { computed, ref, watch } from 'vue';
 	import { useAuthStore } from '@/stores/AuthStore';
 	import { useCartStore } from '@/stores/CartStore';
+
 
 	const cartStore = useCartStore()
 	const auth = useAuthStore()
@@ -87,6 +97,9 @@
 	  valid: '',
 	  cvv: ''
 	});
+	const orderStatusDialogVisible = ref(false);
+	const currentOrderStatus = ref<any>(null);
+
 
 	function openCartDialog() {
 	  showCartDialog.value = true;
@@ -102,5 +115,14 @@
 		console.log(data);
 		userId.value = data.id.toString();
 		cartStore.confirmOrder(userId.value, paymentDetails.value);
+		showCartDialog.value = false;
 	}
+
+	watch(() => cartStore.confirmedOrder, (newVal) => {
+	  if (newVal) {
+		orderStatusDialogVisible.value = true;
+
+		currentOrderStatus.value = cartStore.getConfirmedOrder
+	  }
+	});
 </script>

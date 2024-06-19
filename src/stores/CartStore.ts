@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Product } from '@/types/product'
+import type { Order } from '@/types/order'
 import FetchService from "@/fetchService";
 import { fetchEventSource } from '@microsoft/fetch-event-source';
 
@@ -9,11 +10,13 @@ const fetchService = new FetchService(baseUrl, authToken);
 
 interface State {
  products: Product[];
+ confirmedOrder: any;
 }
 
 export const useCartStore = defineStore('cart', {
   state: (): State  => ({
-    products: JSON.parse(localStorage.getItem('cartProducts')) || [] 
+    products: JSON.parse(localStorage.getItem('cartProducts')) || [],
+	confirmedOrder: null
   }),
   getters: {
     productCount(state: State): number {
@@ -24,7 +27,10 @@ export const useCartStore = defineStore('cart', {
       return state.products.reduce((total, product) => {
         return total + (product.price * product.quantity);
       }, 0);
-    }
+    },
+	getConfirmedOrder(state: State): any {
+		return state.confirmedOrder
+	}
   },
   actions: {
     addProduct(product: Product) {
@@ -66,13 +72,15 @@ export const useCartStore = defineStore('cart', {
         .then(response => {
           this.clearCart();
           console.log('Order confirmed successfully:', response);
-		  this.listenToOrderStatus(response.id, response.store_id);
+		  this.listenToOrderStatus(response.id, response.store_id, (confirmedOrder) => {
+			this.confirmedOrder = confirmedOrder 
+		  });
         })
         .catch(error => {
           console.error('Error confirming order:', error);
         });
     },
-	listenToOrderStatus(orderId: string, storeId: string) {
+	listenToOrderStatus(orderId: string, storeId: string, callback: (data: any) => void) {
 		fetchEventSource(`http://localhost:3000/stores/${storeId}/orders/${orderId}/status`, {
 		  method: 'GET',
 		  headers: {
@@ -89,6 +97,7 @@ export const useCartStore = defineStore('cart', {
 		  onmessage(event) {
 			const data = JSON.parse(event.data);
 			console.log(data);
+			callback(data);
 
 			switch (data.status) {
 			  case 'order_placed':
